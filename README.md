@@ -1,6 +1,6 @@
-# EPSILON — The little arcade
+# EPSILON 
 
-A retro-modern collection of quick browser games built with React, Vite, and Tailwind CSS.
+games built with React, Vite, and Tailwind CSS.
 
 ## Run locally
 
@@ -17,6 +17,5 @@ npm run build
 
 ## Games
 
-Epsilon: Zero platformer, Chess, Snake, Minesweeper, Doodle Baseball, Pong, Breakout, Tic-Tac-Toe, 2048, Memory Match, and Flappy Bird.
 
 Choose a palette from Settings. The selected theme is saved in local storage.
