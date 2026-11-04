@@ -1,157 +1,80 @@
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useState } from 'react'
 
-const GAMES = [
-  { id: 'platformer', name: 'Epsilon: Zero', icon: '◈', desc: 'A little platformer with a big finale.', type: 'FEATURED' },
-  { id: 'chess', name: 'Chess', icon: '♞', desc: 'A timeless match. Play a friend or the CPU.', type: 'STRATEGY' },
-  { id: 'snake', name: 'Snake', icon: '⤳', desc: 'One more apple. One more high score.', type: 'ARCADE' },
-  { id: 'minesweeper', name: 'Minesweeper', icon: '▦', desc: 'Clear the field. Trust your numbers.', type: 'PUZZLE' },
-  { id: 'baseball', name: 'Doodle Baseball', icon: '⚾', desc: 'Keep your eye on the pitch.', type: 'ARCADE' },
-  { id: 'pong', name: 'Pong', icon: '▥', desc: 'The original game of just one more.', type: 'ARCADE' },
-  { id: 'breakout', name: 'Breakout', icon: '▤', desc: 'Smash every brick. Keep the ball alive.', type: 'ARCADE' },
-  { id: 'tictactoe', name: 'Tic-Tac-Toe', icon: '⊞', desc: 'Three in a row. A tiny tactical duel.', type: 'PUZZLE' },
-  { id: '2048', name: '2048', icon: '⁂', desc: 'Slide, merge, and reach the big tile.', type: 'PUZZLE' },
-  { id: 'memory', name: 'Memory Match', icon: '▧', desc: 'Flip a card. Find its other half.', type: 'PUZZLE' },
-  { id: 'flappy', name: 'Flappy Bird', icon: '↗', desc: 'Tap to fly. How far can you make it?', type: 'ARCADE' },
-]
-const THEMES = [
-  { id: 'worth', name: 'Worth', desc: 'The original golden hour.', colors: ['#000000', '#DAA520', '#FFFFFF'] },
-  { id: 'light', name: 'Light', desc: 'A little more daylight.', colors: ['#f4f1e8', '#977019', '#20211f'] },
-  { id: 'dark', name: 'Dark', desc: 'Cool tones, low light.', colors: ['#111318', '#94a3ff', '#eceef4'] },
-  { id: 'cyberpunk', name: 'Cyberpunk', desc: 'Neon after midnight.', colors: ['#0b0710', '#ff42cc', '#35f1ee'] },
-  { id: 'synthwave', name: 'Synthwave', desc: 'Meet me on the horizon.', colors: ['#10091d', '#f2a0ff', '#8d5cff'] },
-  { id: 'monokai', name: 'Monokai', desc: 'A classic editor palette.', colors: ['#272822', '#a6e22e', '#f8f8f2'] },
+const milestones = [
+  { number: '01', title: 'The home base', text: 'A place to land, look around, and get a feel for the world of Epsilon.', state: 'YOU ARE HERE' },
+  { number: '02', title: 'The first worlds', text: 'Small, thoughtful games made for a quick break or a longer stay.', state: 'IN THE WORKS' },
+  { number: '03', title: 'More to discover', text: 'New ideas, new places, and new reasons to come back.', state: 'ON THE HORIZON' },
 ]
 
 export default function App() {
-  const [page, setPage] = useState('home')
-  const [game, setGame] = useState(null)
-  const [drop, setDrop] = useState(false)
-  const [mobile, setMobile] = useState(false)
-  const [theme, setTheme] = useState(() => {
-    try { return localStorage.getItem('epsilon-theme') || 'worth' } catch { return 'worth' }
-  })
-  useEffect(() => {
-    try { localStorage.setItem('epsilon-theme', theme) } catch { /* storage can be disabled */ }
-    document.documentElement.className = `theme-${theme}`
-  }, [theme])
-  const launch = id => { setGame(GAMES.find(g => g.id === id)); setPage('play'); setDrop(false); setMobile(false); window.scrollTo(0, 0) }
-  const navigate = to => { setPage(to); setGame(null); setDrop(false); setMobile(false); window.scrollTo(0, 0) }
-  return <div className={`app-shell theme-${theme}`}>
-    <header className="navbar">
-      <button className="brand" onClick={() => navigate('home')}><span className="brand-mark">ε</span> EPSILON</button>
-      <nav className={`nav-links ${mobile ? 'open' : ''}`}>
-        <button className={`nav-link ${page === 'home' ? 'active' : ''}`} onClick={() => navigate('home')}>Home</button>
-        <div className="dropdown-wrap"><button className="nav-link" aria-expanded={drop} onClick={() => setDrop(!drop)}>Games⌄</button>{drop && <div className="games-menu">{GAMES.map(g => <button key={g.id} onClick={() => launch(g.id)}>{g.icon} &nbsp;{g.name}</button>)}</div>}</div>
-        <button className={`nav-link ${page === 'settings' ? 'active' : ''}`} onClick={() => navigate('settings')}>Settings</button>
-        <button className={`nav-link ${page === 'changelog' ? 'active' : ''}`} onClick={() => navigate('changelog')}>Changelog</button>
+  const [menuOpen, setMenuOpen] = useState(false)
+  const closeMenu = () => setMenuOpen(false)
+
+  return <div className="site-shell">
+    <header className="site-header">
+      <a className="wordmark" href="#home" onClick={closeMenu} aria-label="Epsilon home">
+        <span className="wordmark-symbol">ε</span><span>EPSILON</span>
+      </a>
+      <button className="mobile-menu-button" type="button" aria-label="Toggle navigation" aria-expanded={menuOpen} onClick={() => setMenuOpen(open => !open)}>
+        <span /><span />
+      </button>
+      <nav className={`site-nav ${menuOpen ? 'is-open' : ''}`} aria-label="Main navigation">
+        <a href="#home" onClick={closeMenu}>Home</a>
+        <a href="#about" onClick={closeMenu}>About</a>
+        <a href="#roadmap" onClick={closeMenu}>The journey</a>
       </nav>
-      <div className="nav-right"><span className="status-pill">● ALL SYSTEMS PLAY</span><button className="menu-button" aria-label="Toggle navigation" onClick={() => setMobile(!mobile)}>☰</button></div>
+      <a className="header-note" href="#roadmap"><span className="live-dot" /> A NEW ARCADE IS TAKING SHAPE</a>
     </header>
-    {page === 'home' && <Home launch={launch} />}
-    {page === 'settings' && <Settings theme={theme} setTheme={setTheme} />}
-    {page === 'changelog' && <Changelog />}
-    {page === 'play' && game && <GamePage key={game.id} game={game} back={() => navigate('home')} />}
-    <footer className="footer"><span>ε &nbsp; EPSILON ARCADE</span><span>MADE FOR THE SPACE BETWEEN THINGS · EST. 2025</span></footer>
+
+    <main>
+      <section className="hero" id="home">
+        <div className="hero-copy">
+          <div className="overline"><span className="overline-line" /> A LITTLE WORLD OF PLAY</div>
+          <h1>Good things<br />are <span>in play.</span></h1>
+          <p className="hero-intro">Epsilon is an independent little corner of the internet for games, playful ideas, and the joy of one more try.</p>
+          <div className="hero-actions">
+            <a className="button button-primary" href="#about">Get to know Epsilon <span aria-hidden="true">↗</span></a>
+            <a className="text-link" href="#roadmap">See what’s ahead <span aria-hidden="true">↓</span></a>
+          </div>
+          <div className="hero-footnote"><span className="footnote-icon">✳</span> A work in progress, made with care.</div>
+        </div>
+
+        <div className="hero-art" aria-label="Abstract Epsilon arcade illustration" role="img">
+          <div className="art-grid" />
+          <div className="orbit orbit-one" /><div className="orbit orbit-two" />
+          <div className="planet"><span>ε</span></div>
+          <div className="spark spark-one">✳</div><div className="spark spark-two">✦</div><div className="spark spark-three">·</div>
+          <div className="art-label art-label-top">INSERT CURIOSITY</div>
+          <div className="art-label art-label-bottom"><span>PRESS START</span><i /></div>
+          <div className="art-index">001 / ∞</div>
+        </div>
+        <div className="hero-coordinate">A PLACE FOR PLAYFUL MINDS <span>·</span> EST. 2025</div>
+      </section>
+
+      <section className="intro-section" id="about">
+        <div className="section-label"><span>01</span> / THE IDEA</div>
+        <div className="intro-content">
+          <h2>Not just a collection<br />of games. <em>A feeling.</em></h2>
+          <div className="intro-detail"><p>Epsilon is being built as a welcoming home for small, satisfying games. No noise, no rush—just curious ideas and a little room to play.</p><p>We’re starting with the foundation. The worlds will come next.</p></div>
+        </div>
+      </section>
+
+      <section className="roadmap-section" id="roadmap">
+        <div className="roadmap-heading"><div><div className="section-label"><span>02</span> / WHAT'S NEXT</div><h2>One step at a time.</h2></div><p>Every good world starts<br />with a first page.</p></div>
+        <div className="milestone-list">{milestones.map(item => <article className="milestone" key={item.number}>
+          <span className="milestone-number">{item.number}</span>
+          <div className="milestone-copy"><h3>{item.title}</h3><p>{item.text}</p></div>
+          <span className={`milestone-state ${item.number === '01' ? 'current' : ''}`}><i />{item.state}</span>
+        </article>)}</div>
+      </section>
+
+      <section className="closing-card">
+        <div className="closing-orbit" aria-hidden="true">ε</div>
+        <div className="closing-copy"><div className="overline"><span className="overline-line" /> THE BEGINNING</div><h2>There’s room<br />for one more.</h2></div>
+        <a className="button button-light" href="#home">Back to the top <span aria-hidden="true">↑</span></a>
+      </section>
+    </main>
+
+    <footer className="site-footer"><a className="wordmark footer-mark" href="#home"><span className="wordmark-symbol">ε</span><span>EPSILON</span></a><span className="footer-caption">A SMALL CORNER OF THE INTERNET, STILL UNFOLDING.</span><a className="footer-top" href="#home">BACK UP ↑</a></footer>
   </div>
-}
-
-function Home({ launch }) {
-  return <main><section className="hero"><div className="hero-content"><div className="eyebrow">A small arcade for a big universe</div><h1>One more game.<br /><span>Then we go.</span></h1><p>Eleven little worlds, ready when you are. Pick a favorite, find a new one, and make yourself at home.</p><div className="hero-actions"><button className="button-primary" onClick={() => launch('platformer')}>Play Epsilon: Zero &nbsp;↗</button><button className="button-secondary" onClick={() => document.getElementById('games')?.scrollIntoView({ behavior: 'smooth' })}>Explore the arcade</button></div></div></section>
-    <section id="games"><div className="section-head"><div><div className="eyebrow">THE ARCADE</div><h2>Choose your next distraction.</h2></div><p>10 games · no quarters required</p></div><div className="game-grid">{GAMES.map(g => <button className="game-card" key={g.id} onClick={() => launch(g.id)}><span className="game-icon">{g.icon}</span><div className="tag">{g.type}</div><h3>{g.name}</h3><p>{g.desc}</p></button>)}</div></section></main>
-}
-function Settings({ theme, setTheme }) { return <main className="page"><div className="eyebrow">MAKE YOURSELF AT HOME</div><h1 className="page-title">Settings</h1><p className="page-subtitle">A little color goes a long way. Your theme is saved on this device.</p><div className="section-head" style={{ marginTop: 38 }}><div><h2>Pick a palette</h2></div><p>Saved automatically</p></div><div className="settings-grid">{THEMES.map(t => <button key={t.id} className={`theme-card ${theme === t.id ? 'selected' : ''}`} onClick={() => setTheme(t.id)}><span className="theme-dots">{t.colors.map(c => <i key={c} style={{ background: c }} />)}</span><strong>{t.name}{theme === t.id ? ' ✓' : ''}</strong><p>{t.desc}</p></button>)}</div></main> }
-function Changelog() { return <main className="page"><div className="eyebrow">FRESH FROM THE ARCADE</div><h1 className="page-title">Changelog</h1><p className="page-subtitle">Little improvements, lovingly shipped.</p><div className="timeline"><article className="release"><div className="eyebrow">NOV 04, 2026 · VERSION 1.0.0</div><h3>The arcade opens its doors.</h3><div className="release-tags"><span className="patch-tag">Feature</span><span className="patch-tag fix">Fix</span></div><p>Eleven games, six cozy themes, and a brand-new platformer adventure.</p><p><span className="tag">FEATURE</span> Epsilon: Zero — 15 levels, escalating challenges, and a multi-phase boss.</p><p><span className="tag">FEATURE</span> Chess, Snake, Minesweeper, Doodle Baseball, Pong, Breakout, Tic-Tac-Toe, 2048, Memory Match &amp; Flappy Bird.</p><p><span className="tag">FIX</span> Smoother touch, keyboard, and mouse controls across the arcade.</p></article><article className="release"><div className="eyebrow">THE LITTLE DETAILS</div><h3>A home that feels like yours.</h3><div className="release-tags"><span className="patch-tag fix">Fix</span><span className="patch-tag balance">Balance</span></div><p><span className="tag">FIX</span> Theme choice sticks around between visits.</p><p><span className="tag">BALANCE</span> Responsive layouts and forgiving controls for small screens.</p></article></div></main> }
-function GamePage({ game, back }) { return <main className="game-page"><div className="game-top"><button className="back-button" onClick={back}>← &nbsp; Back to arcade</button><span className="tag">{game.type}</span></div><h1 className="game-title">{game.icon} &nbsp;{game.name}</h1><p className="page-subtitle" style={{ marginTop: 0, marginBottom: 20 }}>{game.desc}</p><div className="game-layout"><div className="game-stage">{game.id === 'tictactoe' ? <TicTacToe /> : game.id === '2048' ? <Game2048 /> : game.id === 'memory' ? <Memory /> : game.id === 'minesweeper' ? <Minesweeper /> : game.id === 'snake' ? <Snake /> : game.id === 'platformer' ? <Platformer /> : game.id === 'chess' ? <Chess /> : game.id === 'pong' ? <CanvasArcade type="pong" /> : game.id === 'breakout' ? <CanvasArcade type="breakout" /> : game.id === 'flappy' ? <CanvasArcade type="flappy" /> : <Baseball />}</div><aside className="game-aside"><h3>HOW TO PLAY</h3><GameInstructions id={game.id} /><div className="score-line"><span className="muted">Best played</span><span>Fullscreen-ish</span></div><div className="score-line"><span className="muted">Made with</span><span>♥ &nbsp;and pixels</span></div><p className="game-note">Your progress stays right here in this little browser.</p></aside></div></main> }
-function GameInstructions({ id }) { const copy = { platformer: 'Move with A / D or ← / →. Jump with Space or ↑. Reach the gold exit. Level 15 has a boss—dodge, then strike!', chess: 'Tap a piece, then tap where it should go. Capture the dark king to win. Switch modes to play a friend.', snake: 'Steer with arrow keys or WASD. Eat the gold fruit, avoid your tail. Use the speed selector to change pace.', minesweeper: 'Reveal tiles to find clues. Numbers show nearby mines. Use flag mode to mark danger.', baseball: 'Click Swing (or press Space) when the pitch crosses the plate. Better timing means a bigger hit.', pong: 'Move your mouse or use W/S to steer. First to 5 wins!', breakout: 'Move your mouse or use ← / → to steer. Clear the bricks without dropping the ball.', tictactoe: 'Take turns placing X and O. Three in a row wins. Choose CPU mode for a challenge.', '2048': 'Use arrow keys or the on-screen arrows to slide. Matching numbers merge. Can you reach 2048?', memory: 'Flip two cards at a time. Find every matching pair in as few moves as possible.', flappy: 'Click, tap, or press Space to flap. Fly through gaps between the pipes.' }; return <p>{copy[id]}</p> }
-function NewGame({ onClick, children = 'New game' }) { return <button className="button-primary" onClick={onClick}>{children}</button> }
-
-function TicTacToe() {
-  const [board, setBoard] = useState(Array(9).fill('')), [turn, setTurn] = useState('X'), [cpu, setCpu] = useState(false), [status, setStatus] = useState('Your turn — X')
-  const winner = b => { for (const [a, c, d] of [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]]) if (b[a] && b[a] === b[c] && b[a] === b[d]) return b[a]; return b.every(Boolean) ? 'draw' : null }
-  const play = (i, b = board, t = turn) => { if (b[i] || winner(b)) return; const n = [...b]; n[i] = t; const w = winner(n); setBoard(n); setTurn(t === 'X' ? 'O' : 'X'); setStatus(w ? (w === 'draw' ? 'A lovely draw.' : `${w} wins!`) : `Your turn — ${t === 'X' ? 'O' : 'X'}`) }
-  useEffect(() => { if (cpu && turn === 'O' && !winner(board)) { const timer = setTimeout(() => { const open = board.map((v, i) => v ? null : i).filter(v => v !== null); if (open.length) play(open[Math.floor(Math.random() * open.length)], board, 'O') }, 350); return () => clearTimeout(timer) } }, [turn, cpu, board])
-  const reset = () => { setBoard(Array(9).fill('')); setTurn('X'); setStatus('Your turn — X') }
-  return <><div className="eyebrow">{status}</div><div className="board tic-board" style={{ margin: '22px 0' }}>{board.map((v, i) => <button className="cell" key={i} onClick={() => turn === 'X' && play(i)}>{v}</button>)}</div><div className="control-row"><button className="button-secondary" onClick={() => { setCpu(!cpu); reset() }}>Mode: {cpu ? 'vs CPU' : '2 players'}</button><NewGame onClick={reset} /></div></>
-}
-
-function Game2048() {
-  const addTile = b => { const empty = b.map((v, i) => v ? null : i).filter(i => i !== null); if (empty.length) b[empty[Math.floor(Math.random() * empty.length)]] = Math.random() < .9 ? 2 : 4 }
-  const init = () => { const b = Array(16).fill(0); addTile(b); addTile(b); return b }
-  const [board, setBoard] = useState(init), [score, setScore] = useState(0)
-  const move = useCallback(dir => { setBoard(old => { const b = [...old]; let gain = 0; for (let r = 0; r < 4; r++) { const ids = Array.from({ length: 4 }, (_, c) => dir === 'left' || dir === 'right' ? r * 4 + (dir === 'left' ? c : 3 - c) : dir === 'up' || dir === 'down' ? (dir === 'up' ? c * 4 + r : (3 - c) * 4 + r) : c); const vals = ids.map(i => b[i]).filter(Boolean), out = []; for (let i = 0; i < vals.length; i++) { if (vals[i] === vals[i + 1]) { out.push(vals[i] * 2); gain += vals[i] * 2; i++ } else out.push(vals[i]) } ids.forEach((id, j) => { b[id] = out[j] || 0 }) } if (b.some((v, i) => v !== old[i])) { addTile(b); setScore(s => s + gain) } return b }) }, [])
-  useEffect(() => { const h = e => { const d = { ArrowLeft: 'left', ArrowRight: 'right', ArrowUp: 'up', ArrowDown: 'down' }[e.key]; if (d) { e.preventDefault(); move(d) } }; window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h) }, [move])
-  return <><div className="eyebrow">SCORE &nbsp;{score}</div><div className="board grid2048" style={{ margin: '18px 0' }}>{board.map((v, i) => <div className="cell" key={i} style={{ background: v ? ({ 2:'#e8dfcb',4:'#dfd0a6',8:'#dfa85d',16:'#df854e',32:'#dc6855',64:'#ce4c40',128:'#d6c55b',256:'#d8ba45',512:'#d8a934',1024:'#cf9623',2048:'#d6a83c' }[v] || '#d6a83c') : '#414036' }}>{v || ''}</div>)}</div><div className="control-row">{['←','↑','↓','→'].map((a, i) => <button className="button-secondary" key={a} onClick={() => move(['left','up','down','right'][i])}>{a}</button>)}<NewGame onClick={() => { setBoard(init()); setScore(0) }}>New game</NewGame></div></>
-}
-function Memory() {
-  const emojis = ['🍋','🍇','🍒','🥝','🍊','🍉','🍍','🥑']
-  const shuffle = () => [...emojis, ...emojis].sort(() => Math.random() - .5).map((v, i) => ({ v, id: i }))
-  const [cards, setCards] = useState(shuffle), [open, setOpen] = useState([]), [found, setFound] = useState([]), [moves, setMoves] = useState(0)
-  function flip(i) { if (open.length === 2 || open.includes(i) || found.includes(cards[i].v)) return; const next = [...open, i]; setOpen(next); if (next.length === 2) { setMoves(m => m + 1); if (cards[next[0]].v === cards[next[1]].v) { setFound(f => [...f, cards[next[0]].v]); setTimeout(() => setOpen([]), 450) } else setTimeout(() => setOpen([]), 850) } }
-  function reset() { setCards(shuffle()); setOpen([]); setFound([]); setMoves(0) }
-  return <><div className="eyebrow">{found.length === 8 ? 'ALL MATCHED!' : `${moves} MOVES · ${found.length}/8 PAIRS`}</div><div className="board memory-grid" style={{ margin: '20px 0' }}>{cards.map((c, i) => <button className="cell" key={c.id} onClick={() => flip(i)} style={{ background: open.includes(i) || found.includes(c.v) ? 'var(--accent-soft)' : undefined }}>{open.includes(i) || found.includes(c.v) ? c.v : '✳'}</button>)}</div><NewGame onClick={reset}>Shuffle &amp; restart</NewGame></>
-}
-function Minesweeper() {
-  const [level, setLevel] = useState('Easy'), [seed, setSeed] = useState(0), [flags, setFlags] = useState(false), [revealed, setRevealed] = useState([]), [marked, setMarked] = useState([]), [mine, setMine] = useState([])
-  const size = level === 'Easy' ? 9 : level === 'Medium' ? 12 : 14, mines = level === 'Easy' ? 10 : level === 'Medium' ? 22 : 38
-  const generate = useCallback(() => { const s = new Set(); while (s.size < mines) s.add(Math.floor(Math.random() * size * size)); setMine([...s]); setRevealed([]); setMarked([]) }, [size, mines])
-  useEffect(() => { generate() }, [generate, seed])
-  const neighbors = i => [i-size-1,i-size,i-size+1,i-1,i+1,i+size-1,i+size,i+size+1].filter(x => x >= 0 && x < size * size && Math.abs((x % size) - (i % size)) <= 1)
-  function reveal(i) { if (flags || revealed.includes(i) || marked.includes(i) || lost) return; const queue = [i], seen = new Set(revealed); while (queue.length) { const cell = queue.shift(); if (seen.has(cell) || mine.includes(cell)) continue; seen.add(cell); if (neighbors(cell).filter(x => mine.includes(x)).length === 0) neighbors(cell).forEach(x => { if (!seen.has(x) && !mine.includes(x)) queue.push(x) }) } setRevealed([...seen]); if (mine.includes(i)) setRevealed(a => [...a, i]) }
-  const lost = revealed.some(i => mine.includes(i)), won = !lost && revealed.length >= size * size - mines
-  return <><div className="eyebrow">{won ? 'FIELD CLEARED!' : `⚑ ${Math.max(0, mines - marked.length)} MINES LEFT`}</div><div className="board mine-grid" style={{ margin: '17px 0', gridTemplateColumns: `repeat(${size}, ${size > 9 ? 26 : 34}px)` }}>{Array.from({ length: size * size }, (_, i) => { const shown = revealed.includes(i), n = neighbors(i).filter(x => mine.includes(x)).length; return <button key={i} className="cell" aria-label={`Tile ${i + 1}`} onClick={() => reveal(i)} onContextMenu={e => { e.preventDefault(); setMarked(a => a.includes(i) ? a.filter(x => x !== i) : [...a, i]) }} style={{ height: size > 9 ? 26 : 34, background: shown ? 'var(--panel)' : 'var(--panel2)', color: 'var(--accent)' }}>{marked.includes(i) ? '⚑' : shown ? (mine.includes(i) ? '✹' : n || '') : ''}</button> })}</div><div className="control-row"><select value={level} onChange={e => setLevel(e.target.value)}><option>Easy</option><option>Medium</option><option>Hard</option></select><button className="button-secondary" onClick={() => setFlags(!flags)}>{flags ? 'Flag mode ✓' : 'Flag mode'}</button><NewGame onClick={() => setSeed(s => s + 1)}>Restart</NewGame></div>{lost && <p className="game-note">Boom! Reset to try again.</p>}</>
-}
-
-function Snake() {
-  const [speed, setSpeed] = useState(140), [tick, setTick] = useState(0), [running, setRunning] = useState(true)
-  const [snake, setSnake] = useState([{ x: 8, y: 8 }, { x: 7, y: 8 }, { x: 6, y: 8 }]), [food, setFood] = useState({ x: 12, y: 8 }), [dir, setDir] = useState({ x: 1, y: 0 }), [score, setScore] = useState(0)
-  const direction = useRef(dir); useEffect(() => { direction.current = dir }, [dir])
-  const reset = () => { setSnake([{ x: 8, y: 8 }, { x: 7, y: 8 }, { x: 6, y: 8 }]); setFood({ x: 12, y: 8 }); setDir({ x: 1, y: 0 }); direction.current = { x: 1, y: 0 }; setScore(0); setRunning(true); setTick(0) }
-  useEffect(() => { const h = e => { const d = { ArrowUp:{x:0,y:-1}, w:{x:0,y:-1}, ArrowDown:{x:0,y:1}, s:{x:0,y:1}, ArrowLeft:{x:-1,y:0}, a:{x:-1,y:0}, ArrowRight:{x:1,y:0}, d:{x:1,y:0} }[e.key]; if (d) { e.preventDefault(); if (d.x !== -direction.current.x || d.y !== -direction.current.y) { direction.current = d; setDir(d) } } }; window.addEventListener('keydown', h); return () => window.removeEventListener('keydown', h) }, [])
-  useEffect(() => { if (!running) return; const timer = setInterval(() => { setSnake(old => { const head = { x: old[0].x + direction.current.x, y: old[0].y + direction.current.y }; if (head.x < 0 || head.x >= 16 || head.y < 0 || head.y >= 16 || old.some(s => s.x === head.x && s.y === head.y)) { setRunning(false); return old } const ate = head.x === food.x && head.y === food.y; const next = [head, ...old.slice(0, ate ? old.length : -1)]; if (ate) { setScore(s => s + 10); let f; do { f = { x: Math.floor(Math.random() * 16), y: Math.floor(Math.random() * 16) } } while (next.some(s => s.x === f.x && s.y === f.y)); setFood(f) } return next }); setTick(t => t + 1) }, speed); return () => clearInterval(timer) }, [running, speed, food])
-  return <><div className="eyebrow">SCORE {score} · BEST {Math.max(score, Number(localStorage.getItem('epsilon-snake-best') || 0))}</div><div className="board" style={{ gridTemplateColumns: 'repeat(16, 20px)', gap: 2, margin: '16px 0', padding: 5, background: 'var(--panel2)', borderRadius: 8 }}>{Array.from({ length: 256 }, (_, i) => { const x = i % 16, y = Math.floor(i / 16), body = snake.some(s => s.x === x && s.y === y), isFood = food.x === x && food.y === y; return <div key={i} style={{ width: 20, height: 20, borderRadius: 4, background: body ? 'var(--accent)' : isFood ? 'var(--red)' : 'var(--panel)' }} /> })}</div><div className="control-row"><select value={speed} onChange={e => setSpeed(Number(e.target.value))}><option value={190}>Slow</option><option value={140}>Normal</option><option value={90}>Fast</option></select><button className="button-secondary" onClick={() => setRunning(!running)}>{running ? 'Pause' : 'Resume'}</button><NewGame onClick={reset}>Restart</NewGame></div>{!running && <p className="game-note">Game over — score {score}. Give it another go!</p>}</>
-}
-
-const PIECES = { K:'♔', Q:'♕', R:'♖', B:'♗', N:'♘', P:'♙', k:'♚', q:'♛', r:'♜', b:'♝', n:'♞', p:'♟' }
-const initialChess = () => ['rnbqkbnr'.split(''), Array(8).fill('p'), ...Array.from({ length: 4 }, () => Array(8).fill('')), Array(8).fill('P'), 'RNBQKBNR'.split('')]
-function Chess() {
-  const [board, setBoard] = useState(initialChess), [turn, setTurn] = useState('w'), [selected, setSelected] = useState(null), [cpu, setCpu] = useState(false), [status, setStatus] = useState('White to move')
-  const movesFor = (b, r, c) => { const p = b[r][c]; if (!p) return []; const white = p === p.toUpperCase(), kind = p.toUpperCase(), out = [], add = (y,x) => { if (y < 0 || y > 7 || x < 0 || x > 7) return false; const q = b[y][x]; if (!q) { out.push([y,x]); return true } if ((q === q.toUpperCase()) !== white) out.push([y,x]); return false }; if (kind === 'P') { const d = white ? -1 : 1; if (r + d >= 0 && r + d < 8 && !b[r+d][c]) { out.push([r+d,c]); if ((white ? r === 6 : r === 1) && !b[r+2*d][c]) out.push([r+2*d,c]) } for (const x of [c-1,c+1]) if (x>=0&&x<8&&b[r+d]?.[x]&&((b[r+d][x]===b[r+d][x].toUpperCase())!==white)) out.push([r+d,x]) } else { const dirs = kind==='N'?[[-2,-1],[-2,1],[-1,-2],[-1,2],[1,-2],[1,2],[2,-1],[2,1]]:kind==='K'?[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]:kind==='B'?[[-1,-1],[-1,1],[1,-1],[1,1]]:kind==='R'?[[-1,0],[1,0],[0,-1],[0,1]]:[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]]; for (const [dy,dx] of dirs) { let y=r+dy,x=c+dx; while (y>=0&&y<8&&x>=0&&x<8) { const cont=add(y,x); if (kind==='N'||kind==='K'||!cont) break; y+=dy; x+=dx } } } return out }
-  const hasKing = (b, color) => b.flat().includes(color === 'w' ? 'k' : 'K')
-  const move = (from, to, b = board, side = turn) => { const next = b.map(row => [...row]); let piece = next[from[0]][from[1]]; next[from[0]][from[1]] = ''; if (piece === 'P' && to[0] === 0) piece = 'Q'; if (piece === 'p' && to[0] === 7) piece = 'q'; next[to[0]][to[1]] = piece; setBoard(next); setSelected(null); const winner = !hasKing(next, side === 'w' ? 'b' : 'w'); setTurn(side === 'w' ? 'b' : 'w'); setStatus(winner ? `${side === 'w' ? 'White' : 'Black'} wins!` : `${side === 'w' ? 'Black' : 'White'} to move`) }
-  useEffect(() => { if (!cpu || turn !== 'b' || !hasKing(board,'w') || !hasKing(board,'b')) return; const t = setTimeout(() => { const choices=[]; board.forEach((row,r)=>row.forEach((p,c)=>{if(p&&p===p.toLowerCase())movesFor(board,r,c).forEach(to=>choices.push({from:[r,c],to,capture:board[to[0]][to[1]]}))})); choices.sort((a,b)=>(b.capture?1:0)-(a.capture?1:0)); const choice=choices[Math.floor(Math.random()*Math.min(choices.length,Math.max(1,Math.ceil(choices.length/3))))]; if(choice)move(choice.from,choice.to,board,'b') },400); return()=>clearTimeout(t) },[cpu,turn,board])
-  const click = (r,c) => { if (cpu && turn === 'b') return; const piece=board[r][c]; if (selected) { if (movesFor(board,...selected).some(([y,x])=>y===r&&x===c)) move(selected,[r,c]); else if(piece&&(piece===piece.toUpperCase())===(turn==='w'))setSelected([r,c]); else setSelected(null) } else if(piece&&(piece===piece.toUpperCase())===(turn==='w'))setSelected([r,c]) }
-  return <><div className="eyebrow">{status} · {cpu?'VS CPU':'LOCAL MATCH'}</div><div className="board chess-grid" style={{ margin: '16px 0' }}>{board.flatMap((row,r)=>row.map((p,c)=><button key={`${r}-${c}`} className={`cell ${(r+c)%2?'dark-square':'light-square'}`} onClick={()=>click(r,c)} style={{ outline:selected?.[0]===r&&selected?.[1]===c?'3px solid var(--accent)':undefined }}>{PIECES[p]||''}</button>))}</div><div className="control-row"><button className="button-secondary" onClick={()=>{setCpu(!cpu);setBoard(initialChess());setTurn('w');setStatus('White to move');setSelected(null)}}>Mode: {cpu?'vs CPU':'2 players'}</button><NewGame onClick={()=>{setBoard(initialChess());setTurn('w');setStatus('White to move');setSelected(null)}}>Reset board</NewGame></div></>
-}
-
-function useCanvasGame(type) {
-  const canvasRef = useRef(null), stateRef = useRef({}), [score, setScore] = useState(0), [playing, setPlaying] = useState(false), [ended, setEnded] = useState(false), [tick, setTick] = useState(0)
-  const reset = useCallback(() => { setScore(0); setEnded(false); setPlaying(true); setTick(t => t + 1); stateRef.current = type === 'pong' ? { x: 320,y:180,vx:4,vy:2,p:150,ai:150,points:0 } : type === 'breakout' ? { x:320,y:280,vx:3,vy:-3,p:320,bricks:Array.from({length:30},(_,i)=>({x:20+(i%10)*60,y:35+Math.floor(i/10)*24,on:true})) } : type === 'flappy' ? { y:180,vy:0,pipes:[{x:650,gap:170}],points:0,frame:0 } : { t:0, swing:false, hit:0, result:'' } }, [type])
-  useEffect(() => { reset() }, [reset])
-  useEffect(() => {
-    const canvas=canvasRef.current;if(!canvas)return;const ctx=canvas.getContext('2d');let raf,mouse=150,keys={};const onMouse=e=>{const r=canvas.getBoundingClientRect();mouse=(e.clientY-r.top)*canvas.height/r.height};const onKey=e=>{keys[e.key]=e.type==='keydown';if(type==='flappy'&&e.type==='keydown'&&(e.code==='Space'||e.key==='ArrowUp')){e.preventDefault();stateRef.current.vy=-5}};const onDown=()=>{if(type==='flappy')stateRef.current.vy=-5;if(type==='baseball'){stateRef.current.swing=true;stateRef.current.hit=Math.abs(stateRef.current.t-1.6);stateRef.current.result=stateRef.current.hit<.22?'HOME RUN!':stateRef.current.hit<.5?'NICE HIT!':'STRIKE!';setScore(s=>s+(stateRef.current.hit<.22?4:stateRef.current.hit<.5?2:0));setTimeout(()=>{if(canvasRef.current)stateRef.current={...stateRef.current,t:0,swing:false,result:''}},850)}};canvas.addEventListener('mousemove',onMouse);canvas.addEventListener('mousedown',onDown);canvas.addEventListener('touchstart',onDown,{passive:true});window.addEventListener('keydown',onKey);window.addEventListener('keyup',onKey)
-    const draw=()=>{const s=stateRef.current;ctx.clearRect(0,0,640,360);ctx.fillStyle='#090b0d';ctx.fillRect(0,0,640,360);ctx.fillStyle='#d6a83c';ctx.font='14px monospace';ctx.textAlign='center'
-      if(type==='pong'){ctx.setLineDash([6,8]);ctx.strokeStyle='#50534d';ctx.beginPath();ctx.moveTo(320,0);ctx.lineTo(320,360);ctx.stroke();ctx.setLineDash([]);s.p=keys.w||keys.ArrowUp?s.p-5:keys.s||keys.ArrowDown?s.p+5:mouse-35;s.p=Math.max(0,Math.min(290,s.p));s.ai+=(s.y-s.ai-35)*.045;ctx.fillStyle='#d6a83c';ctx.fillRect(18,s.p,10,70);ctx.fillRect(612,s.ai,10,70);ctx.beginPath();ctx.arc(s.x,s.y,7,0,Math.PI*2);ctx.fill();s.x+=s.vx;s.y+=s.vy;if(s.y<7||s.y>353)s.vy*=-1;if(s.x<30&&s.y>s.p&&s.y<s.p+70)s.vx=Math.abs(s.vx)*1.06;if(s.x>610&&s.y>s.ai&&s.y<s.ai+70)s.vx=-Math.abs(s.vx)*1.06;if(s.x<0||s.x>640){s.points+=1;setScore(s.points);if(s.points>=5){setEnded(true);setPlaying(false)}else{s.x=320;s.y=180;s.vx=s.x<0?4:-4}}ctx.fillText(`${s.points} / 5`,320,25)}
-      if(type==='breakout'){s.p=keys.ArrowLeft||keys.a?s.p-6:keys.ArrowRight||keys.d?s.p+6:mouse-40;s.p=Math.max(0,Math.min(560,s.p));for(const b of s.bricks){if(b.on){ctx.fillStyle=['#d6a83c','#ed796c','#6fd6cf'][Math.floor((b.y-35)/24)];ctx.fillRect(b.x,b.y,52,16);if(s.x>b.x&&s.x<b.x+52&&s.y>b.y&&s.y<b.y+16){b.on=false;s.vy=Math.abs(s.vy);setScore(a=>a+10)}}}ctx.fillStyle='#d6a83c';ctx.fillRect(s.p,328,80,10);ctx.beginPath();ctx.arc(s.x,s.y,7,0,Math.PI*2);ctx.fill();s.x+=s.vx;s.y+=s.vy;if(s.x<7||s.x>633)s.vx*=-1;if(s.y<7)s.vy=Math.abs(s.vy);if(s.y>318&&s.y<345&&s.x>s.p&&s.x<s.p+80)s.vy=-Math.abs(s.vy);if(s.y>360){setEnded(true);setPlaying(false)}if(s.bricks.every(b=>!b.on)){setEnded(true);setPlaying(false)}}
-      if(type==='flappy'){s.frame++;s.vy+=.24;s.y+=s.vy;if(s.frame%95===1)s.pipes.push({x:650,gap:100+Math.random()*160});s.pipes.forEach(p=>{p.x-=2.7;if(!p.scored&&p.x<72){p.scored=true;s.points++;setScore(s.points)}});s.pipes=s.pipes.filter(p=>p.x>-50);ctx.fillStyle='#6fd6cf';for(const p of s.pipes){ctx.fillRect(p.x,0,48,p.gap);ctx.fillRect(p.x,p.gap+120,48,360-p.gap-120);if(p.x<82&&p.x+48>55&&(s.y<p.gap||s.y>p.gap+120)){setEnded(true);setPlaying(false)}}ctx.fillStyle='#d6a83c';ctx.beginPath();ctx.arc(78,s.y,12,0,Math.PI*2);ctx.fill();if(s.y>360||s.y<0){setEnded(true);setPlaying(false)}ctx.fillText(`SCORE ${s.points}`,320,25)}
-      if(type==='baseball'){s.t+=.018;ctx.strokeStyle='#6f766b';ctx.lineWidth=2;ctx.beginPath();ctx.moveTo(320,310);ctx.lineTo(220,210);ctx.lineTo(320,105);ctx.lineTo(420,210);ctx.closePath();ctx.stroke();ctx.fillStyle='#ed796c';ctx.beginPath();ctx.arc(550-s.t*170,180,8,0,Math.PI*2);ctx.fill();ctx.fillStyle='#d6a83c';ctx.fillRect(300,215,7,75);ctx.save();ctx.translate(305,235);ctx.rotate(s.swing?-.9:Math.sin(s.t*3)*.1);ctx.fillRect(0,-5,75,10);ctx.restore();ctx.fillStyle='#fff';ctx.fillText(s.result||'SWING WHEN THE PITCH ARRIVES',320,35);if(s.t>4&&!s.result){s.t=0}}
-      if(playing&&!ended)raf=requestAnimationFrame(draw)};draw();return()=>{cancelAnimationFrame(raf);canvas.removeEventListener('mousemove',onMouse);canvas.removeEventListener('mousedown',onDown);canvas.removeEventListener('touchstart',onDown);window.removeEventListener('keydown',onKey);window.removeEventListener('keyup',onKey)}
-  },[type,playing,ended,tick,setScore])
-  return { canvasRef, score, playing, ended, reset }
-}
-function CanvasArcade({ type }) { const { canvasRef,score,playing,ended,reset }=useCanvasGame(type);const title=type==='pong'?'First to five':type==='breakout'?'Clear the bricks':`Score ${score}`;return <><div className="eyebrow">{title} {ended?'· ROUND OVER':''}</div><canvas ref={canvasRef} width="640" height="360" className="play-canvas" style={{margin:'17px 0',touchAction:'none'}} onClick={type==='flappy'?()=>{if(canvasRef.current)window.dispatchEvent(new KeyboardEvent('keydown',{key:'ArrowUp'}))}:undefined}/><div className="control-row"><NewGame onClick={reset}>{ended?'Play again':'Restart'}</NewGame>{playing&&<span className="muted" style={{fontSize:12}}>Score {score}</span>}</div></> }
-function Baseball(){return <CanvasArcade type="baseball"/>}
-
-function Platformer() {
-  const canvasRef=useRef(null),gameRef=useRef(null),keys=useRef({}),[level,setLevel]=useState(1),[status,setStatus]=useState('Ready when you are'),[running,setRunning]=useState(false),[bossHp,setBossHp]=useState(100)
-  const start=useCallback(n=>{setLevel(n);setBossHp(100);setStatus(`Level ${n} · Find the exit`);setRunning(true);gameRef.current={x:45,y:280,vx:0,vy:0,ground:false,t:0,hp:100,bossX:470,bossDir:-1,invuln:0}},[])
-  useEffect(()=>{const down=e=>{if(['ArrowLeft','ArrowRight','ArrowUp',' ','a','d','w'].includes(e.key)){e.preventDefault();keys.current[e.key.toLowerCase()]=true}};const up=e=>{keys.current[e.key.toLowerCase()]=false};window.addEventListener('keydown',down);window.addEventListener('keyup',up);return()=>{window.removeEventListener('keydown',down);window.removeEventListener('keyup',up)}},[])
-  useEffect(()=>{if(!running)return;const canvas=canvasRef.current,ctx=canvas.getContext('2d');let raf;const loop=()=>{const g=gameRef.current;if(!g)return;const W=640,H=360;g.t++;ctx.fillStyle='#090b0d';ctx.fillRect(0,0,W,H);ctx.fillStyle='#24251e';ctx.fillRect(0,320,W,40);ctx.strokeStyle='#34352d';ctx.beginPath();ctx.moveTo(0,320);ctx.lineTo(W,320);ctx.stroke();ctx.fillStyle='#60635a';ctx.font='12px monospace';ctx.fillText(`LEVEL ${level} / 15`,20,25);ctx.fillText(level===15?'THE GILDED GUARDIAN':'REACH THE GOLD EXIT',W-220,25)
-      const flip=level%4===0&&level!==12;const grav=flip?-1:1;ctx.fillStyle='#6fd6cf';ctx.fillText(flip?'GRAVITY FLIPPED':'',285,25)
-      const plats=[{x:0,y:320,w:640,h:40},{x:130+Math.sin(g.t/45)*25,y:250,w:105,h:12},{x:300,y:195+(level%3)*8,w:90,h:12},{x:440,y:145,w:100,h:12}];if(level>4)plats.push({x:210,y:105+Math.sin(g.t/38)*20,w:75,h:10});ctx.fillStyle='#6a6c5c';plats.slice(1).forEach(p=>ctx.fillRect(p.x,p.y,p.w,p.h))
-      const spikes=level>2?[{x:220,y:309,w:48},{x:365,y:309,w:44},...(level>8?[{x:120,y:239,w:35}]:[])]:[];ctx.fillStyle='#ed796c';spikes.forEach(s=>{ctx.beginPath();ctx.moveTo(s.x,s.y+11);ctx.lineTo(s.x+s.w/2,s.y-10);ctx.lineTo(s.x+s.w,s.y+11);ctx.fill()})
-      const left=keys.current.arrowleft||keys.current.a,right=keys.current.arrowright||keys.current.d,jump=keys.current[' ']||keys.current.arrowup||keys.current.w;g.vx=left?-3.2:right?3.2:0;g.x=Math.max(0,Math.min(615,g.x+g.vx));g.vy+=.38*grav;g.y+=g.vy;g.ground=false;for(const p of plats){if(g.x+22>p.x&&g.x<p.x+p.w&&((grav===1&&g.y+24>=p.y&&g.y+24<=p.y+14&&g.vy>=0)||(grav===-1&&g.y<=p.y+p.h&&g.y>=p.y+p.h-14&&g.vy<=0))){g.y=grav===1?p.y-24:p.y+p.h;g.vy=0;g.ground=true}}if(jump&&g.ground){g.vy=-7*grav;g.ground=false}if(g.y>365||g.y<-35||spikes.some(s=>g.x+20>s.x&&g.x<s.x+s.w&&g.y+24>s.y-12&&g.y<s.y+14)){g.x=45;g.y=280;g.vy=0;setStatus('Ouch! Back to the start.')}
-      if(level===15){g.bossX+=g.bossDir*(1.3+Math.sin(g.t/30)*.5);if(g.bossX<390||g.bossX>565)g.bossDir*=-1;ctx.fillStyle='#ed796c';ctx.fillRect(g.bossX,257,52,58);ctx.fillStyle='#f8f3df';ctx.fillRect(g.bossX+11,270,8,8);ctx.fillRect(g.bossX+33,270,8,8);const phase=g.hp>66?1:g.hp>33?2:3;ctx.fillStyle=phase===1?'#ed796c':phase===2?'#ff42cc':'#d6a83c';if(g.t%110<55)ctx.fillRect(g.bossX-26,305,105,6);ctx.fillStyle='#fff';ctx.fillText(`PHASE ${phase}`,g.bossX+5,245);if(g.x+24>g.bossX&&g.x<g.bossX+52&&g.y+24>257&&g.y<315&&g.invuln===0){g.hp=Math.max(0,g.hp-(jump?4:1));g.invuln=15;setBossHp(g.hp)}if(g.invuln>0)g.invuln--;if(g.hp<=0){ctx.fillStyle='#d6a83c';ctx.font='24px monospace';ctx.fillText('BOSS DEFEATED!',320,100);setStatus('You did it! The arcade is yours.');setRunning(false)}}
-      ctx.fillStyle='#d6a83c';ctx.fillRect(585,273,28,47);ctx.fillStyle='#090b0d';ctx.fillRect(592,283,15,37);ctx.fillStyle=g.invuln%2?'#fff':'#6fd6cf';ctx.fillRect(g.x,g.y,22,24)
-      if(level<15&&g.x>574&&g.y>245){if(level===14){setStatus('The guardian awaits…');start(15)}else{setStatus(`Level ${level+1} unlocked!`);start(level+1)}}raf=requestAnimationFrame(loop)};loop();return()=>cancelAnimationFrame(raf)},[running,level,start])
-  return <><div className="eyebrow">{status}</div><canvas ref={canvasRef} width="640" height="360" className="play-canvas" style={{margin:'16px 0'}}/>{level===15&&<div style={{width:'min(100%,640px)',height:8,background:'var(--line)',borderRadius:8}}><div style={{height:'100%',width:`${bossHp}%`,background:'var(--red)',borderRadius:8,transition:'width .15s'}}/></div>}<div className="control-row"><NewGame onClick={()=>start(1)}>{running?'Restart run':'Start adventure'}</NewGame><span className="muted" style={{fontSize:12}}>15 levels · {level===15?'Boss battle':'scaling difficulty'}</span></div></>
 }
