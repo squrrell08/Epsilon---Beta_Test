@@ -4,23 +4,32 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#080909" />
-  <meta name="description" content="Race the clock, play the tables, and see how many Epsilon tokens you can earn in ten minutes." />
-  <title>Epsilon — 10-Minute Token Race</title>
+  <meta name="description" content="Play Epsilon's ten-minute token race. Choose Blackjack or Roulette and see how high you can score." />
+  <title>Epsilon — A little world of play</title>
   <style>
-    :root{font-family:Arial,Helvetica,sans-serif;color:#f5f2e9;background:#080909;font-synthesis:none;text-rendering:optimizeLegibility;--bg:#080909;--panel:#111313;--panel2:#171918;--line:#282a27;--text:#f5f2e9;--muted:#92948d;--gold:#d8aa48;--green:#87b877;--red:#e46d63}
-    *{box-sizing:border-box}body{margin:0;min-width:320px;background:var(--bg);color:var(--text)}button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.shell{max-width:1080px;margin:auto;padding:0 28px}.header{height:78px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}.brand{font-weight:bold;letter-spacing:.17em;font-size:13px}.brand b{color:var(--gold);font:italic 24px Georgia;margin-right:10px}.header-label,.eyebrow,.label{font:10px monospace;letter-spacing:.13em;color:var(--muted)}main{padding:42px 0 70px}.hero{padding:30px 0 35px}.eyebrow span,.label span{color:var(--gold)}h1{font-size:clamp(38px,7vw,68px);letter-spacing:-.07em;font-weight:500;line-height:1;margin:17px 0}.hero p,.muted{color:var(--muted);line-height:1.75}.hero p{max-width:650px;font-size:15px}.gold{color:var(--gold)}.race-bar{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:20px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:17px 20px}.stat small{display:block;color:var(--muted);font:10px monospace;letter-spacing:.1em;margin-bottom:8px}.stat strong{font:30px monospace}.stat strong.time{color:var(--gold)}.progress{height:4px;background:#282a27;border-radius:4px;overflow:hidden;margin-top:12px}.progress i{height:100%;display:block;background:var(--gold);width:100%;transition:width .25s}.card{background:linear-gradient(145deg,#141614,#0e100f);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,4vw,30px);margin-top:18px}.start-card{text-align:center;padding:40px 25px}.start-card p{max-width:550px;margin:0 auto 23px}.button{border:1px solid transparent;border-radius:5px;padding:12px 17px;font-size:12px;font-weight:700;transition:transform .15s,background .15s}.button:hover:not(:disabled){transform:translateY(-2px)}.primary{background:var(--gold);color:#17140c}.secondary{background:#101211;border-color:var(--line)}.danger{background:#351c1a;border-color:#66322e;color:#ffc1b9}.mode-row{display:flex;gap:10px;margin-bottom:20px}.mode{background:transparent;border:1px solid var(--line);border-radius:5px;padding:10px 15px;color:var(--muted)}.mode.active{border-color:var(--gold);color:var(--gold);background:#d8aa4810}.game-head{display:flex;justify-content:space-between;align-items:start;gap:15px;border-bottom:1px solid var(--line);padding-bottom:17px;margin-bottom:18px}.game-head h2{margin:7px 0;font-size:24px}.game-head p{margin:0;color:var(--muted);font-size:12px}.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:15px 0}.field{display:grid;gap:7px;color:var(--muted);font:10px monospace;letter-spacing:.07em}.field input{width:125px;height:42px;border:1px solid var(--line);border-radius:5px;background:#090b0a;padding:0 10px}.table{background:radial-gradient(ellipse at center,#174b36,#0c211a 72%);border:1px solid #325443;border-radius:8px;padding:20px;min-height:180px;display:grid;gap:15px}.hand-label{text-align:center;color:#c4d2c4;font:10px monospace;letter-spacing:.1em}.hand{display:flex;justify-content:center;gap:7px;min-height:76px;flex-wrap:wrap}.playing-card{width:54px;height:75px;border-radius:6px;background:#f5f0e4;color:#171715;display:grid;place-items:center;font-size:19px;font-weight:bold;box-shadow:0 3px 8px #0005}.playing-card.red{color:#c53e3d}.message{min-height:22px;color:var(--gold);font-size:13px;margin:15px 0}.wheel{width:158px;height:158px;border-radius:50%;border:8px solid #c5a15e;background:conic-gradient(#18844d 0 10deg,#9f342c 10deg 29deg,#171918 29deg 39deg,#9f342c 39deg 58deg,#171918 58deg 68deg,#9f342c 68deg 87deg,#171918 87deg 97deg,#9f342c 97deg 116deg,#171918 116deg 126deg,#9f342c 126deg 145deg,#171918 145deg 155deg,#9f342c 155deg 174deg,#171918 174deg 184deg,#9f342c 184deg 203deg,#171918 203deg 213deg,#9f342c 213deg 232deg,#171918 232deg 242deg,#9f342c 242deg 261deg,#171918 261deg 271deg,#9f342c 271deg 290deg,#171918 290deg 300deg,#9f342c 300deg 319deg,#171918 319deg 329deg,#9f342c 329deg 348deg,#171918 348deg 360deg);display:grid;place-items:center;box-shadow:0 0 30px #0007}.wheel-center{width:48px;height:48px;border-radius:50%;display:grid;place-items:center;background:#101411;border:3px solid #c5a15e;font-weight:bold}.roulette{display:grid;grid-template-columns:180px 1fr;gap:22px;align-items:center}.choices{display:flex;flex-wrap:wrap;gap:7px}.choice{border:1px solid var(--line);border-radius:5px;background:#0b0d0c;padding:9px 11px;font-size:11px}.choice.selected{border-color:var(--gold);color:var(--gold)}.choice.red{color:#f18a7f}.choice.black{color:#ddd}.choice.green{color:#87d59b}.result{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;font-weight:bold;margin-right:8px}.result.red{background:#a8322e}.result.black{background:#141615;border:1px solid #70736d}.result.green{background:#187b48}.summary{text-align:center;padding:45px 20px}.grade{font-size:clamp(80px,18vw,140px);line-height:1;font-weight:700;letter-spacing:-.08em;color:var(--gold);margin:14px}.summary h2{font-size:30px;margin:5px}.summary .muted{max-width:570px;margin:10px auto 23px}.score{font:clamp(28px,6vw,42px) monospace;margin:14px;color:var(--text)}.fail{color:var(--red)}.rules{font-size:11px;color:var(--muted);line-height:1.7}.footer{text-align:center;border-top:1px solid var(--line);padding:22px;color:#73766f;font:9px monospace;letter-spacing:.1em}
-    @media(max-width:620px){.shell{padding:0 18px}.header{height:68px}.header-label{font-size:8px}.race-bar{gap:8px}.stat{padding:14px 12px}.stat strong{font-size:23px}.roulette{grid-template-columns:1fr;justify-items:center}.roulette-controls{width:100%}.game-head{display:block}.game-head .label{margin-top:8px}.mode-row{gap:6px}.mode{flex:1;padding:10px 8px}.start-card{padding:30px 17px}}
+    :root{font-family:Arial,Helvetica,sans-serif;color:#f5f2e9;background:#080909;font-synthesis:none;text-rendering:optimizeLegibility;scroll-behavior:smooth;--bg:#080909;--panel:#111313;--panel2:#171918;--line:#282a27;--text:#f5f2e9;--muted:#92948d;--gold:#d8aa48;--gold-dim:#d8aa4822;--red:#e46d63;--green:#87b877}
+    *{box-sizing:border-box}body{margin:0;min-width:320px;background:var(--bg);color:var(--text)}a{color:inherit;text-decoration:none}button,input{font:inherit;color:inherit}button{cursor:pointer}button:disabled{opacity:.45;cursor:not-allowed}.shell{max-width:1160px;margin:0 auto;padding:0 6%}.header{height:80px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:20px;position:relative;z-index:5}.brand{display:flex;align-items:center;gap:10px;font-size:13px;font-weight:700;letter-spacing:.17em;white-space:nowrap}.brand-symbol{display:grid;place-items:center;width:31px;height:31px;color:var(--gold);font:italic 20px Georgia;border:1px solid #d8aa4870;border-radius:8px;letter-spacing:0}.nav{display:flex;align-items:center;gap:28px}.nav a{font-size:12px;color:var(--muted)}.nav a:hover,.nav a.active{color:var(--text)}.wallet{border:1px solid #d8aa4845;border-radius:999px;padding:8px 12px;color:var(--gold);font:11px monospace;white-space:nowrap}.wallet b{color:var(--text)}.menu{display:none;background:var(--panel);border:1px solid var(--line);border-radius:5px;width:38px;height:38px}.menu span{display:block;width:15px;height:1px;background:#ddd;margin:4px auto}.header-wallet{margin-left:auto}main{min-height:72vh;padding:48px 0 70px}.eyebrow,.label{font:10px monospace;letter-spacing:.14em;color:var(--muted)}.eyebrow span,.label span{color:var(--gold)}h1{font-size:clamp(44px,8vw,88px);letter-spacing:-.085em;font-weight:500;line-height:.96;margin:24px 0}h2{letter-spacing:-.045em}.gold{color:var(--gold);font-family:Georgia,serif;font-style:italic}.lead{max-width:590px;color:#a6a69e;font-size:15px;line-height:1.85}.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:27px}.button{min-height:44px;padding:0 16px;display:inline-flex;align-items:center;justify-content:center;gap:12px;border:1px solid transparent;border-radius:5px;font-size:12px;font-weight:700;transition:transform .15s,background .15s}.button:hover:not(:disabled){transform:translateY(-2px)}.primary{background:var(--gold);color:#17140c}.primary:hover{background:#e8bd63}.secondary{background:transparent;border-color:var(--line)}.secondary:hover{border-color:var(--gold)}.hero{min-height:375px;display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:center;border-bottom:1px solid var(--line);padding:30px 0 42px}.hero-copy{position:relative;z-index:1}.hero-art{min-height:300px;display:grid;place-items:center;position:relative;background-image:linear-gradient(#ffffff08 1px,transparent 1px),linear-gradient(90deg,#ffffff08 1px,transparent 1px);background-size:35px 35px;mask-image:radial-gradient(ellipse,#000 20%,transparent 73%)}.planet{width:min(27vw,250px);aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle at 34% 29%,#f0ca78 0,#c18b36 30%,#785126 58%,#34291c 77%,#101110 78%);box-shadow:inset -28px -24px 60px #080909bd,0 0 70px #d8aa4820;animation:float 7s ease-in-out infinite}.planet span{font:italic clamp(80px,11vw,130px) Georgia;color:#fff4d7b5}.orbit{position:absolute;width:min(36vw,370px);aspect-ratio:1;border:1px solid #d8aa4830;border-radius:50%;transform:rotate(-25deg) scaleY(.42)}@keyframes float{50%{transform:translateY(-10px)}}.section{padding:42px 0}.section-heading{display:flex;justify-content:space-between;align-items:end;gap:18px;margin-bottom:22px}.section-heading h2{font-size:clamp(28px,4vw,40px);margin:10px 0 0}.section-heading p{max-width:320px;color:var(--muted);font-size:12px;line-height:1.7}.tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}.tile{display:block;padding:24px;border:1px solid var(--line);border-radius:9px;background:linear-gradient(145deg,#141614,#0e100f);min-height:190px;transition:border-color .2s,transform .2s}.tile:hover{border-color:#d8aa4870;transform:translateY(-3px)}.tile-icon{font-size:28px;color:var(--gold)}.tile h3{margin:19px 0 8px;font-size:20px}.tile p,.muted{color:var(--muted);font-size:12px;line-height:1.7}.tile-link{color:var(--gold);font:10px monospace;letter-spacing:.08em;margin-top:20px}.page-title{font-size:clamp(38px,6vw,60px);margin:15px 0}.card{background:linear-gradient(145deg,#141614,#0e100f);border:1px solid var(--line);border-radius:10px;padding:clamp(18px,4vw,30px);margin-top:17px}.race-intro{display:flex;justify-content:space-between;align-items:center;gap:20px}.race-intro h2{margin:8px 0;font-size:26px}.race-intro p{margin:0;color:var(--muted);font-size:12px;line-height:1.7}.race-bar{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:18px 0}.stat{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:15px 18px}.stat small{display:block;color:var(--muted);font:10px monospace;letter-spacing:.1em;margin-bottom:7px}.stat strong{font:28px monospace}.stat strong.time{color:var(--gold)}.progress{height:4px;background:#282a27;border-radius:4px;overflow:hidden;margin-top:10px}.progress i{height:100%;display:block;background:var(--gold);width:100%;transition:width .25s}.mode-row{display:flex;gap:8px;margin:16px 0}.mode{background:transparent;border:1px solid var(--line);border-radius:5px;padding:10px 14px;color:var(--muted)}.mode.active{border-color:var(--gold);color:var(--gold);background:#d8aa4810}.game-head{display:flex;justify-content:space-between;align-items:start;gap:15px;border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:18px}.game-head h2{margin:7px 0;font-size:23px}.game-head p{margin:0;color:var(--muted);font-size:12px}.row{display:flex;gap:10px;align-items:end;flex-wrap:wrap;margin:15px 0}.field{display:grid;gap:7px;color:var(--muted);font:10px monospace;letter-spacing:.07em}.field input{width:125px;height:42px;border:1px solid var(--line);border-radius:5px;background:#090b0a;padding:0 10px}.table{background:radial-gradient(ellipse at center,#174b36,#0c211a 72%);border:1px solid #325443;border-radius:8px;padding:20px;min-height:175px;display:grid;gap:12px}.hand-label{text-align:center;color:#c4d2c4;font:10px monospace;letter-spacing:.1em}.hand{display:flex;justify-content:center;gap:7px;min-height:72px;flex-wrap:wrap}.playing-card{width:52px;height:72px;border-radius:6px;background:#f5f0e4;color:#171715;display:grid;place-content:center;text-align:center;font-size:18px;font-weight:bold;box-shadow:0 3px 8px #0005}.playing-card.red{color:#c53e3d}.message{min-height:22px;color:var(--gold);font-size:13px;margin:13px 0}.roulette{display:grid;grid-template-columns:170px 1fr;gap:20px;align-items:center}.wheel{width:155px;height:155px;border-radius:50%;border:8px solid #c5a15e;background:conic-gradient(#18844d 0 10deg,#9f342c 10deg 29deg,#171918 29deg 39deg,#9f342c 39deg 58deg,#171918 58deg 68deg,#9f342c 68deg 87deg,#171918 87deg 97deg,#9f342c 97deg 116deg,#171918 116deg 126deg,#9f342c 126deg 145deg,#171918 145deg 155deg,#9f342c 155deg 174deg,#171918 174deg 184deg,#9f342c 184deg 203deg,#171918 203deg 213deg,#9f342c 213deg 232deg,#171918 232deg 242deg,#9f342c 242deg 261deg,#171918 261deg 271deg,#9f342c 271deg 290deg,#171918 290deg 300deg,#9f342c 300deg 319deg,#171918 319deg 329deg,#9f342c 329deg 348deg,#171918 348deg 360deg);display:grid;place-items:center;box-shadow:0 0 30px #0007}.wheel.spinning{animation:wheelspin .95s cubic-bezier(.12,.7,.15,1)}@keyframes wheelspin{to{transform:rotate(1260deg)}}.wheel-center{width:45px;height:45px;border-radius:50%;display:grid;place-items:center;background:#101411;border:3px solid #c5a15e;font-weight:bold}.choices{display:flex;flex-wrap:wrap;gap:7px}.choice{border:1px solid var(--line);border-radius:5px;background:#0b0d0c;padding:9px 10px;font-size:11px}.choice.selected{border-color:var(--gold);color:var(--gold)}.choice.red{color:#f18a7f}.choice.black{color:#ddd}.choice.green{color:#87d59b}.result{text-align:center;padding:45px 20px}.grade{font-size:clamp(80px,18vw,140px);line-height:1;font-weight:700;letter-spacing:-.08em;color:var(--gold);margin:15px}.grade.fail{color:var(--red)}.score{font:clamp(28px,6vw,42px) monospace;margin:14px}.result p{max-width:580px;margin:15px auto 23px}.result-range{font:10px monospace;letter-spacing:.1em;color:var(--muted)}.changelog-item{border-top:1px solid var(--line);padding:20px 0}.changelog-item h3{margin:9px 0}.changelog-item p{margin:0}.footer{text-align:center;border-top:1px solid var(--line);padding:22px;color:#73766f;font:9px monospace;letter-spacing:.1em}.mobile-only{display:none}
+    @media(max-width:720px){.shell{padding:0 20px}.header{height:70px;gap:10px}.menu{display:block;order:3;flex:none}.nav{display:none;position:absolute;left:0;right:0;top:69px;padding:17px 20px;background:#101212;border:1px solid var(--line);border-radius:5px;flex-direction:column;align-items:flex-start;gap:17px}.nav.open{display:flex}.header-wallet{margin-left:auto}.hero{grid-template-columns:1fr;padding-top:36px}.hero-art{min-height:220px;grid-row:1}.planet{width:170px}.orbit{width:260px}.section-heading{display:block}.section-heading p{margin-bottom:0}.tiles{grid-template-columns:1fr}.race-intro{display:block}.race-intro .wallet{display:inline-block;margin-top:14px}.roulette{grid-template-columns:1fr;justify-items:center}.roulette-controls{width:100%}.game-head{display:block}.game-head .wallet{display:inline-block;margin-top:12px}.race-bar{gap:8px}.stat{padding:13px 11px}.stat strong{font-size:23px}main{padding-top:32px}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;transition:none!important;animation:none!important}}
   </style>
 </head>
 <body>
   <div class="shell">
-    <header class="header"><div class="brand"><b>ε</b>EPSILON</div><div class="header-label">THE 10-MINUTE TOKEN RACE</div></header>
+    <header class="header">
+      <a class="brand" href="#home" aria-label="Epsilon home"><span class="brand-symbol">ε</span><span>EPSILON</span></a>
+      <nav class="nav" aria-label="Main navigation"><a data-nav="home" href="#home">Home</a><a data-nav="games" href="#games">Games</a><a data-nav="changelog" href="#changelog">Changelog</a></nav>
+      <div class="wallet header-wallet" aria-live="polite">✦ <b id="header-tokens">100</b> tokens</div>
+      <button class="menu" aria-label="Toggle navigation" aria-expanded="false"><span></span><span></span></button>
+    </header>
     <main id="app"></main>
     <footer class="footer">A SMALL CORNER OF THE INTERNET, STILL UNFOLDING.</footer>
   </div>
   <script>
     (() => {
       const app = document.getElementById('app')
+      const headerTokens = document.getElementById('header-tokens')
+      const nav = document.querySelector('.nav')
+      const menu = document.querySelector('.menu')
       const STARTING_TOKENS = 100
       const RACE_MS = 10 * 60 * 1000
       const redNumbers = new Set([1,3,5,7,9,12,14,16,18,19,21,23,25,27,30,32,34,36])
@@ -36,17 +45,23 @@
       let clockTimer = null
       let message = ''
       let lastSpin = null
-
       const fmt = n => Math.floor(n).toLocaleString()
+      const route = () => (location.hash.slice(1).split('/')[0] || 'home').toLowerCase()
+
       function gradeFor(n) {
-        if (n <= 100) return ['F', '0–100 tokens', 'You ran out of time or tokens to build a bigger stack. Every race starts fresh—try a different strategy.']
-        if (n <= 500) return ['D', '101–500 tokens', 'A cautious start. Keep your wagers measured and look for chances to grow your stack.']
-        if (n <= 2500) return ['C', '501–2,500 tokens', 'A steady run. You found a rhythm and made your starting stack work.']
-        if (n <= 10000) return ['B', '2,501–10,000 tokens', 'A strong race with solid growth.']
-        if (n <= 100000) return ['A', '10,001–100,000 tokens', 'Excellent pace—you built a serious stack.']
-        if (n <= 999999) return ['S', '100,001–999,999 tokens', 'Outstanding. You played the clock and the tables very well.']
-        if (n <= 99999999) return ['S+', '1,000,000–99,999,999 tokens', 'Extraordinary run. That is a huge stack for ten minutes.']
-        return ['S++', '100,000,000+ tokens', 'An incredible, record-tier race.']
+        if (n <= 100) return ['F','0–100 tokens','You finished with no growth. A fresh race is ready whenever you are.']
+        if (n <= 500) return ['D','101–500 tokens','A cautious start. Keep wagers measured and look for chances to grow your stack.']
+        if (n <= 2500) return ['C','501–2,500 tokens','A steady run. You found a rhythm and made your starting stack work.']
+        if (n <= 10000) return ['B','2,501–10,000 tokens','A strong race with solid growth.']
+        if (n <= 100000) return ['A','10,001–100,000 tokens','Excellent pace—you built a serious stack.']
+        if (n <= 999999) return ['S','100,001–999,999 tokens','Outstanding. You played the clock and tables very well.']
+        if (n <= 99999999) return ['S+','1,000,000–99,999,999 tokens','Extraordinary run. That is a huge stack for ten minutes.']
+        return ['S++','100,000,000+ tokens','An incredible, record-tier race.']
+      }
+      function syncTokenDisplays() {
+        headerTokens.textContent = fmt(tokens)
+        const live = document.getElementById('token-count')
+        if (live) live.textContent = fmt(tokens)
       }
       function startRace() {
         tokens = STARTING_TOKENS
@@ -54,12 +69,14 @@
         active = true
         finished = false
         blackjack = null
+        mode = 'blackjack'
         rouletteColor = 'red'
         rouletteBusy = false
         lastSpin = null
         message = 'Race started! Make every token count.'
         clearInterval(clockTimer)
         clockTimer = setInterval(tick, 200)
+        location.hash = 'race'
         render()
       }
       function endRace(reason) {
@@ -70,7 +87,8 @@
         clearTimeout(rouletteTimer)
         rouletteBusy = false
         message = reason
-        render()
+        syncTokenDisplays()
+        if (route() === 'race') render()
       }
       function tick() {
         if (!active) return
@@ -81,11 +99,11 @@
         const bar = document.getElementById('time-progress')
         if (el) el.textContent = `${String(Math.floor(time / 60000)).padStart(2,'0')}:${String(Math.floor(time % 60000 / 1000)).padStart(2,'0')}`
         if (bar) bar.style.width = `${Math.max(0, time / RACE_MS * 100)}%`
-        const bank = document.getElementById('token-count')
-        if (bank) bank.textContent = fmt(tokens)
+        syncTokenDisplays()
       }
       function changeTokens(delta) {
         tokens = Math.max(0, Math.floor(tokens + delta))
+        syncTokenDisplays()
         if (tokens <= 0) { tokens = 0; endRace('You hit zero tokens, so the race ended automatically.') }
       }
       function cardMarkup(c) { return `<div class="playing-card ${c.suit === '♥' || c.suit === '♦' ? 'red' : ''}">${c.rank}<br>${c.suit}</div>` }
@@ -102,43 +120,42 @@
         return deck
       }
       function dealBlackjack() {
-        if (!active || !blackjack || blackjack.active) {
-          const wager = Math.floor(Number(document.getElementById('bj-wager')?.value))
-          if (!Number.isFinite(wager) || wager < 1 || wager > tokens) { message = 'Enter a valid wager within your token balance.'; render(); return }
-          changeTokens(-wager)
-          if (!active) return
-          const deck = newDeck()
-          blackjack = {deck, player:[deck.pop(),deck.pop()], dealer:[deck.pop(),deck.pop()], wager, active:true}
-          const playerTotal = handValue(blackjack.player), dealerTotal = handValue(blackjack.dealer)
-          if (playerTotal === 21) {
-            blackjack.active = false
-            if (dealerTotal === 21) { changeTokens(wager); message = 'Push — both hands have blackjack. Your wager is returned.' }
-            else { changeTokens(Math.floor(wager * 2.5)); message = `Blackjack! Your 3:2 payout is ${fmt(Math.floor(wager * 1.5))} tokens.` }
-          } else message = 'Your move: hit or stand.'
-          render()
-        }
+        if (!active || (blackjack && blackjack.active)) return
+        const wager = Math.floor(Number(document.getElementById('bj-wager')?.value))
+        if (!Number.isFinite(wager) || wager < 1 || wager > tokens) { message = 'Enter a valid wager within your token balance.'; render(); return }
+        changeTokens(-wager)
+        if (!active) return
+        const deck = newDeck()
+        blackjack = {deck,player:[deck.pop(),deck.pop()],dealer:[deck.pop(),deck.pop()],wager,active:true}
+        const p = handValue(blackjack.player), d = handValue(blackjack.dealer)
+        if (p === 21) {
+          blackjack.active = false
+          if (d === 21) { changeTokens(wager); message = 'Push — both hands have blackjack. Your wager is returned.' }
+          else { const payout = Math.floor(wager * 2.5); changeTokens(payout); message = `Blackjack! Your 3:2 payout is ${fmt(payout-wager)} tokens.` }
+        } else message = 'Your move: hit or stand.'
+        render()
       }
-      function settleBlackjack(text, payout) {
+      function settleBlackjack(text,payout) {
         blackjack.active = false
         if (payout) changeTokens(payout)
         message = text
-        if (active) render()
+        if (active && route() === 'race') render()
       }
       function hit() {
         if (!active || !blackjack?.active) return
         blackjack.player.push(blackjack.deck.pop())
         const total = handValue(blackjack.player)
-        if (total > 21) settleBlackjack(`Bust at ${total}. You lost ${fmt(blackjack.wager)} tokens.`, 0)
+        if (total > 21) settleBlackjack(`Bust at ${total}. You lost ${fmt(blackjack.wager)} tokens.`,0)
         else if (total === 21) stand()
         else { message = `You have ${total}. Hit or stand?`; render() }
       }
       function stand() {
         if (!active || !blackjack?.active) return
         while (handValue(blackjack.dealer) < 17) blackjack.dealer.push(blackjack.deck.pop())
-        const player = handValue(blackjack.player), dealer = handValue(blackjack.dealer)
-        if (dealer > 21 || player > dealer) settleBlackjack(`You win ${fmt(blackjack.wager)} tokens! Dealer: ${dealer}, you: ${player}.`, blackjack.wager * 2)
-        else if (player === dealer) settleBlackjack(`Push — both hands total ${player}. Your wager is returned.`, blackjack.wager)
-        else settleBlackjack(`Dealer wins with ${dealer}. Your hand: ${player}.`, 0)
+        const p = handValue(blackjack.player), d = handValue(blackjack.dealer)
+        if (d > 21 || p > d) settleBlackjack(`You win ${fmt(blackjack.wager)} tokens! Dealer: ${d}, you: ${p}.`,blackjack.wager*2)
+        else if (p === d) settleBlackjack(`Push — both hands total ${p}. Your wager is returned.`,blackjack.wager)
+        else settleBlackjack(`Dealer wins with ${d}. Your hand: ${p}.`,0)
       }
       function spin() {
         const wager = Math.floor(Number(document.getElementById('rl-wager')?.value))
@@ -151,65 +168,76 @@
         message = 'The wheel is spinning…'
         render()
         rouletteTimer = setTimeout(() => {
-          const number = Math.floor(Math.random() * 37)
+          if (!active) return
+          const number = Math.floor(Math.random()*37)
           const color = number === 0 ? 'green' : redNumbers.has(number) ? 'red' : 'black'
           const payout = color === rouletteColor ? wager * (color === 'green' ? 36 : 2) : 0
           if (payout) changeTokens(payout)
           lastSpin = {number,color}
           rouletteBusy = false
-          message = payout ? `You won ${fmt(payout - wager)} tokens!` : `No win this time. You lost ${fmt(wager)} tokens.`
-          if (active) render()
-        }, 950)
+          message = payout ? `You won ${fmt(payout-wager)} tokens!` : `No win this time. You lost ${fmt(wager)} tokens.`
+          if (active && route() === 'race') render()
+        },950)
       }
-      function raceView() {
-        const time = Math.max(0, deadline - Date.now())
-        const left = `${String(Math.floor(time/60000)).padStart(2,'0')}:${String(Math.floor(time%60000/1000)).padStart(2,'0')}`
-        const game = mode === 'blackjack' ? blackjackView() : rouletteView()
-        return `<section class="hero"><div class="eyebrow"><span>ε</span> / THE ARCADE CHALLENGE</div><h1>Ten minutes.<br><span class="gold">One big stack.</span></h1><p>Play Blackjack or Roulette and finish with as many tokens as you can. Your race score is your token balance when time runs out.</p></section>
-          <div class="race-bar"><div class="stat"><small>TOKENS</small><strong id="token-count">${fmt(tokens)}</strong></div><div class="stat"><small>TIME LEFT</small><strong class="time" id="time-left">${left}</strong><div class="progress"><i id="time-progress" style="width:${time/RACE_MS*100}%"></i></div></div></div>
-          <div class="mode-row"><button class="mode ${mode==='blackjack'?'active':''}" data-mode="blackjack" ${rouletteBusy?'disabled':''}>♠ Blackjack</button><button class="mode ${mode==='roulette'?'active':''}" data-mode="roulette" ${rouletteBusy?'disabled':''}>◉ Roulette</button></div>
-          ${game}<div class="message" aria-live="polite">${message}</div><p class="rules">Virtual tokens only. Blackjack pays 3:2 for a natural blackjack and 1:1 for a regular win. Roulette is single-zero: red/black pay 1:1; green 0 pays 35:1 profit. The race ends immediately at zero tokens.</p>
-          <div class="row"><button id="end-race" class="button secondary">End race early</button></div>`
+      function homePage() {
+        return `<section class="hero"><div class="hero-copy"><div class="eyebrow"><span>ε</span> / A LITTLE WORLD OF PLAY</div><h1>Good things<br>are <span class="gold">in play.</span></h1><p class="lead">Welcome to Epsilon: a little arcade for playful ideas and the joy of one more try. Start with 100 tokens and see how much you can build in ten minutes.</p><div class="actions"><a class="button primary" href="#games">Explore the games ↗</a><a class="button secondary" href="#changelog">See what's new</a></div></div><div class="hero-art" role="img" aria-label="Golden planet with the Epsilon symbol"><div class="orbit"></div><div class="planet"><span>ε</span></div></div></section><section class="section"><div class="section-heading"><div><div class="label"><span>01</span> / THE CHALLENGE</div><h2>One race. Ten minutes.</h2></div><p>Choose your table, manage one shared token balance, and finish with the highest score you can.</p></div><div class="tiles"><a class="tile" href="#games"><div class="tile-icon">♠ ◉</div><h3>Pick your game</h3><p>Play Blackjack or Roulette during one timed race. Both tables use the same live token stack.</p><div class="tile-link">VISIT THE ARCADE ↗</div></a><a class="tile" href="#changelog"><div class="tile-icon">✳</div><h3>What's new</h3><p>See the latest Epsilon updates and what we’re building next.</p><div class="tile-link">READ THE CHANGELOG ↗</div></a></div></section>`
+      }
+      function gamesPage() {
+        return `<div class="eyebrow"><span>ε</span> / THE ARCADE</div><h1 class="page-title">Choose your game.</h1><p class="lead">Start one ten-minute race. Your 100 starting tokens are shared between the tables; every wager and payout updates the same balance.</p><div class="tiles section"><article class="tile"><div class="tile-icon">♠</div><h3>Blackjack</h3><p>Beat the dealer without going over 21. Dealer stands on 17. Natural blackjack pays 3:2; regular wins pay 1:1.</p><div class="tile-link">TABLE GAME · SHARED TOKEN BALANCE</div></article><article class="tile"><div class="tile-icon">◉</div><h3>Roulette</h3><p>Bet on red, black, or green 0. Red and black return 2× your wager; green 0 returns 36×.</p><div class="tile-link">TABLE GAME · SHARED TOKEN BALANCE</div></article></div><section class="card"><div class="race-intro"><div><div class="label"><span>10:00</span> / ONE RACE</div><h2>Ready to race the clock?</h2><p>Start with 100 tokens. The timer begins when you start and the race ends at zero or when time runs out.</p></div><button class="button primary" id="start-race">Start the race ↗</button></div></section>`
+      }
+      function changelogPage() {
+        return `<div class="eyebrow"><span>ε</span> / THE LATEST</div><h1 class="page-title">Changelog</h1><p class="lead">A little log of what’s new around here.</p><section class="card"><div class="changelog-item"><div class="label"><span>NEW</span> / THE ARCADE CHALLENGE</div><h3>Ten-minute token race</h3><p class="muted">A timed challenge with one shared token stack, Blackjack and Roulette, automatic failure at zero, and an end-of-race grade from F to S++.</p></div><div class="changelog-item"><div class="label"><span>01</span> / THE HOME BASE</div><h3>Epsilon opens its doors</h3><p class="muted">A small corner of the internet for games, playful ideas, and the joy of one more try.</p></div></section>`
       }
       function blackjackView() {
         const g = blackjack
         const dealer = g ? g.dealer.map((c,i) => g.active && i===1 ? '<div class="playing-card">🂠</div>' : cardMarkup(c)).join('') : ''
         const player = g ? g.player.map(cardMarkup).join('') : ''
-        return `<section class="card"><div class="game-head"><div><div class="label"><span>01</span> / TABLE GAME</div><h2>Blackjack</h2><p>Beat the dealer without going over 21. Dealer stands on 17.</p></div></div>
-          <div class="table"><div><div class="hand-label">DEALER · ${g?.active ? '??' : g ? handValue(g.dealer) : '—'}</div><div class="hand">${dealer || '<span class="muted">Dealer cards appear here</span>'}</div></div><div><div class="hand-label">YOU · ${g ? handValue(g.player) : '—'}</div><div class="hand">${player || '<span class="muted">Your cards appear here</span>'}</div></div></div>
-          ${!g || !g.active ? `<div class="row"><label class="field">WAGER (1–${fmt(tokens)})<input id="bj-wager" type="number" min="1" max="${tokens}" value="${Math.min(10,tokens)}" ${!active||tokens===0?'disabled':''}></label><button class="button primary" id="deal" ${!active||tokens===0?'disabled':''}>Deal cards ↗</button></div>` : `<div class="row"><button class="button primary" id="hit">Hit</button><button class="button secondary" id="stand">Stand</button></div>`}</section>`
+        return `<section class="card"><div class="game-head"><div><div class="label"><span>01</span> / TABLE GAME</div><h2>Blackjack</h2><p>Beat the dealer without going over 21. Dealer stands on 17.</p></div><span class="wallet">✦ <b>${fmt(tokens)}</b> tokens</span></div><div class="table"><div><div class="hand-label">DEALER · ${g?.active?'??':g?handValue(g.dealer):'—'}</div><div class="hand">${dealer||'<span class="muted">Dealer cards appear here</span>'}</div></div><div><div class="hand-label">YOU · ${g?handValue(g.player):'—'}</div><div class="hand">${player||'<span class="muted">Your cards appear here</span>'}</div></div></div>${!g||!g.active?`<div class="row"><label class="field">WAGER (1–${fmt(tokens)})<input id="bj-wager" type="number" min="1" max="${tokens}" value="${Math.min(10,tokens)}" ${!active||tokens===0?'disabled':''}></label><button class="button primary" id="deal" ${!active||tokens===0?'disabled':''}>Deal cards ↗</button></div>`:`<div class="row"><button class="button primary" id="hit">Hit</button><button class="button secondary" id="stand">Stand</button></div>`}</section>`
       }
       function rouletteView() {
         const recent = lastSpin
-        return `<section class="card"><div class="game-head"><div><div class="label"><span>02</span> / TABLE GAME</div><h2>Roulette</h2><p>Pick a color and wager. Green 0 returns 36× your stake.</p></div></div>
-          <div class="roulette"><div class="wheel"><div class="wheel-center">${recent ? recent.number : 'ε'}</div></div><div class="roulette-controls"><div class="hand-label" style="text-align:left;margin-bottom:9px">CHOOSE YOUR BET</div><div class="choices"><button class="choice red ${rouletteColor==='red'?'selected':''}" data-color="red" ${!active||rouletteBusy?'disabled':''}>Red · 1:1</button><button class="choice black ${rouletteColor==='black'?'selected':''}" data-color="black" ${!active||rouletteBusy?'disabled':''}>Black · 1:1</button><button class="choice green ${rouletteColor==='green'?'selected':''}" data-color="green" ${!active||rouletteBusy?'disabled':''}>Green 0 · 35:1</button></div>
-          <div class="row"><label class="field">WAGER (1–${fmt(tokens)})<input id="rl-wager" type="number" min="1" max="${tokens}" value="${Math.min(10,tokens)}" ${!active||tokens===0||rouletteBusy?'disabled':''}></label><button class="button primary" id="spin" ${!active||tokens===0||rouletteBusy?'disabled':''}>${rouletteBusy?'Spinning…':'Spin ↗'}</button></div><div class="message">${recent?`<span class="result ${recent.color}">${recent.number}</span>`:''}${message}</div></div></div></section>`
+        return `<section class="card"><div class="game-head"><div><div class="label"><span>02</span> / TABLE GAME</div><h2>Roulette</h2><p>Pick a color and wager. Green 0 returns 36× your stake.</p></div><span class="wallet">✦ <b>${fmt(tokens)}</b> tokens</span></div><div class="roulette"><div class="wheel ${rouletteBusy?'spinning':''}"><div class="wheel-center">${recent?recent.number:'ε'}</div></div><div class="roulette-controls"><div class="hand-label" style="text-align:left;margin-bottom:9px">CHOOSE YOUR BET</div><div class="choices"><button class="choice red ${rouletteColor==='red'?'selected':''}" data-color="red" ${!active||rouletteBusy?'disabled':''}>Red · 1:1</button><button class="choice black ${rouletteColor==='black'?'selected':''}" data-color="black" ${!active||rouletteBusy?'disabled':''}>Black · 1:1</button><button class="choice green ${rouletteColor==='green'?'selected':''}" data-color="green" ${!active||rouletteBusy?'disabled':''}>Green 0 · 35:1</button></div><div class="row"><label class="field">WAGER (1–${fmt(tokens)})<input id="rl-wager" type="number" min="1" max="${tokens}" value="${Math.min(10,tokens)}" ${!active||tokens===0||rouletteBusy?'disabled':''}></label><button class="button primary" id="spin" ${!active||tokens===0||rouletteBusy?'disabled':''}>${rouletteBusy?'Spinning…':'Spin ↗'}</button></div><div class="message" aria-live="polite">${recent?`<b class="${recent.color}">${recent.number} ${recent.color}</b> · `:''}${message}</div></div></div></section>`
       }
-      function resultView() {
-        const [grade,range,description] = gradeFor(tokens)
-        const zero = tokens === 0
-        return `<section class="card summary"><div class="eyebrow"><span>ε</span> / RACE COMPLETE</div><div class="grade ${zero?'fail':''}">${zero?'F':grade}</div><h2>${zero?'Race failed — zero tokens':'Your race result'}</h2><div class="score">${fmt(tokens)} tokens</div><div class="label">GRADE RANGE: ${range}</div><p class="muted">${message} ${description}</p><button id="race-again" class="button primary">Start a new 10-minute race ↗</button><p class="rules" style="margin-top:20px">Your result is temporary and stored only in this page session. A shared leaderboard will need a server later.</p></section>`
+      function racePage() {
+        if (finished) {
+          const [grade,range,description] = gradeFor(tokens)
+          const zero = tokens === 0
+          return `<section class="card result"><div class="eyebrow"><span>ε</span> / RACE COMPLETE</div><div class="grade ${zero?'fail':''}">${zero?'F':grade}</div><h2>${zero?'Race failed — zero tokens':'Your race result'}</h2><div class="score">${fmt(tokens)} tokens</div><div class="result-range">GRADE RANGE: ${range}</div><p class="muted">${message} ${description}</p><button class="button primary" id="race-again">Start a new 10-minute race ↗</button><p class="muted">Your result is temporary and lives in this browser session. A shared leaderboard will need a server later.</p></section>`
+        }
+        if (!active) return `<div class="eyebrow"><span>ε</span> / THE ARCADE CHALLENGE</div><h1 class="page-title">Ten minutes. <span class="gold">One big stack.</span></h1><p class="lead">Start a timed race with 100 tokens. Choose Blackjack or Roulette and finish with as many as you can. The same token balance is shared between both games.</p><section class="card race-intro"><div><div class="label"><span>10:00</span> · ONE RACE · 100 STARTING TOKENS</div><h2>Ready when you are.</h2><p>Timer begins when you start. Zero tokens ends the race immediately.</p></div><button class="button primary" id="start-race">Start the race ↗</button></section>`
+        const time = Math.max(0,deadline-Date.now())
+        const left = `${String(Math.floor(time/60000)).padStart(2,'0')}:${String(Math.floor(time%60000/1000)).padStart(2,'0')}`
+        return `<div class="race-intro"><div><div class="eyebrow"><span>ε</span> / THE 10-MINUTE ARCADE CHALLENGE</div><h2>One big stack.</h2><p>Pick a table; your tokens are shared between games.</p></div><span class="wallet">✦ <b>${fmt(tokens)}</b> tokens</span></div><div class="race-bar"><div class="stat"><small>TOKENS</small><strong id="token-count">${fmt(tokens)}</strong></div><div class="stat"><small>TIME LEFT</small><strong class="time" id="time-left">${left}</strong><div class="progress"><i id="time-progress" style="width:${time/RACE_MS*100}%"></i></div></div></div><div class="mode-row"><button class="mode ${mode==='blackjack'?'active':''}" data-mode="blackjack" ${rouletteBusy?'disabled':''}>♠ Blackjack</button><button class="mode ${mode==='roulette'?'active':''}" data-mode="roulette" ${rouletteBusy?'disabled':''}>◉ Roulette</button></div>${mode==='blackjack'?blackjackView():rouletteView()}<p class="muted">Virtual tokens only. Blackjack pays 3:2 for natural blackjack and 1:1 for a regular win. Roulette is single-zero: red/black pay 1:1 profit; green 0 pays 35:1 profit. The race ends immediately at zero tokens.</p><div class="row"><button id="end-race" class="button secondary">End race early</button></div>`
       }
-      function startView() {
-        return `<section class="hero"><div class="eyebrow"><span>ε</span> / THE ARCADE CHALLENGE</div><h1>Ten minutes.<br><span class="gold">One big stack.</span></h1><p>Play Blackjack or Roulette and finish with as many tokens as you can. Start with 100 tokens, make your wagers, and see where you land on the Epsilon performance scale.</p></section><section class="card start-card"><div class="label"><span>10:00</span> · ONE RACE · 100 STARTING TOKENS</div><p class="muted">Your timer begins when you start. The race ends at ten minutes or immediately if you hit zero tokens. No account needed; your result is shown at the end.</p><button class="button primary" id="start-race">Start the race ↗</button></section>`
+      function updateNav() {
+        const page = route()
+        document.querySelectorAll('[data-nav]').forEach(a => a.classList.toggle('active',a.dataset.nav===page))
+        document.title = page==='home'?'Epsilon — A little world of play':page==='games'?'Epsilon — Games':page==='changelog'?'Epsilon — Changelog':'Epsilon — Token Race'
       }
       function render() {
-        if (finished) app.innerHTML = resultView()
-        else if (!active) app.innerHTML = startView()
-        else app.innerHTML = raceView()
+        const page = route()
+        updateNav()
+        if (page==='games') app.innerHTML=gamesPage()
+        else if (page==='changelog') app.innerHTML=changelogPage()
+        else if (page==='race') app.innerHTML=racePage()
+        else app.innerHTML=homePage()
+        headerTokens.textContent=fmt(tokens)
         bind()
       }
       function bind() {
-        document.getElementById('start-race')?.addEventListener('click', startRace)
-        document.getElementById('race-again')?.addEventListener('click', startRace)
-        document.getElementById('end-race')?.addEventListener('click', () => endRace('You ended the race early.'))
-        document.getElementById('deal')?.addEventListener('click', dealBlackjack)
-        document.getElementById('hit')?.addEventListener('click', hit)
-        document.getElementById('stand')?.addEventListener('click', stand)
-        document.getElementById('spin')?.addEventListener('click', spin)
-        document.querySelectorAll('[data-mode]').forEach(button => button.addEventListener('click', () => { if (!active || rouletteBusy) return; mode=button.dataset.mode; message=''; render() }))
-        document.querySelectorAll('[data-color]').forEach(button => button.addEventListener('click', () => { if (!active || rouletteBusy) return; rouletteColor=button.dataset.color; render() }))
+        document.getElementById('start-race')?.addEventListener('click',startRace)
+        document.getElementById('race-again')?.addEventListener('click',startRace)
+        document.getElementById('end-race')?.addEventListener('click',()=>endRace('You ended the race early.'))
+        document.getElementById('deal')?.addEventListener('click',dealBlackjack)
+        document.getElementById('hit')?.addEventListener('click',hit)
+        document.getElementById('stand')?.addEventListener('click',stand)
+        document.getElementById('spin')?.addEventListener('click',spin)
+        document.querySelectorAll('[data-mode]').forEach(b=>b.addEventListener('click',()=>{if(!active||rouletteBusy)return;mode=b.dataset.mode;message='';render()}))
+        document.querySelectorAll('[data-color]').forEach(b=>b.addEventListener('click',()=>{if(!active||rouletteBusy)return;rouletteColor=b.dataset.color;render()}))
       }
+      menu.addEventListener('click',()=>{const open=menu.getAttribute('aria-expanded')==='true';menu.setAttribute('aria-expanded',String(!open));nav.classList.toggle('open',!open)})
+      nav.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>{menu.setAttribute('aria-expanded','false');nav.classList.remove('open')}))
+      window.addEventListener('hashchange',()=>{if(rouletteBusy&&route()!=='race'){clearTimeout(rouletteTimer);rouletteBusy=false}render()})
       render()
     })()
   </script>
